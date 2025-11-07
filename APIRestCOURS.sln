@@ -1,0 +1,29 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# 
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "APIRestCOURS", "APIRestCOURS\APIRestCOURS.csproj", "{04A0DCC4-FBA8-43D9-8437-6EF52DDEABC9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "APIRestCOURS.DataAccess", "APIRestCOURS.DataAccess\APIRestCOURS.DataAccess.csproj", "{564D3A24-409E-4837-9E4E-34062F6C2DAD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "APIRestCOURS.Service", "APIRestCOURS.Service\APIRestCOURS.Service.csproj", "{EEA064F1-87C7-4F70-A6EF-C8B8FAEC8553}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{04A0DCC4-FBA8-43D9-8437-6EF52DDEABC9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{04A0DCC4-FBA8-43D9-8437-6EF52DDEABC9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{04A0DCC4-FBA8-43D9-8437-6EF52DDEABC9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{04A0DCC4-FBA8-43D9-8437-6EF52DDEABC9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{564D3A24-409E-4837-9E4E-34062F6C2DAD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{564D3A24-409E-4837-9E4E-34062F6C2DAD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{564D3A24-409E-4837-9E4E-34062F6C2DAD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{564D3A24-409E-4837-9E4E-34062F6C2DAD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EEA064F1-87C7-4F70-A6EF-C8B8FAEC8553}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EEA064F1-87C7-4F70-A6EF-C8B8FAEC8553}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EEA064F1-87C7-4F70-A6EF-C8B8FAEC8553}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EEA064F1-87C7-4F70-A6EF-C8B8FAEC8553}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal

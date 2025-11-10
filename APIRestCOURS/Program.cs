@@ -3,11 +3,13 @@ using APIRestCOURS.BackgroundServices;
 using APIRestCOURS.Configuration;
 using APIRestCOURS.DataAccess;
 using APIRestCOURS.DataAccess.Interfaces;
+using APIRestCOURS.DataAccess.Models;
 using APIRestCOURS.Middleware;
 using APIRestCOURS.Service;
 using APIRestCOURS.Service.Interfaces;
 using APIRestCOURS.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 
@@ -29,8 +31,32 @@ builder.Services.AddScoped<IBankService, BankService>();
 // Register Authentication Service
 builder.Services.AddScoped<IAuthService, AuthService>();
 
+// Register Database Seeder
+builder.Services.AddScoped<IDbSeeder, DbSeeder>();
+
 // Register Background Services
 builder.Services.AddHostedService<TokenCleanupService>();
+
+// Configure Identity
+builder.Services.AddIdentity<User, Role>(options =>
+{
+    // Password settings
+    options.Password.RequireDigit = true;
+    options.Password.RequireLowercase = true;
+    options.Password.RequireUppercase = true;
+    options.Password.RequireNonAlphanumeric = true;
+    options.Password.RequiredLength = 8;
+
+    // User settings
+    options.User.RequireUniqueEmail = true;
+
+    // Lockout settings
+    options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(5);
+    options.Lockout.MaxFailedAccessAttempts = 5;
+    options.Lockout.AllowedForNewUsers = true;
+})
+.AddEntityFrameworkStores<BankDbContext>()
+.AddDefaultTokenProviders();
 
 // Configure JWT Settings
 builder.Services.Configure<JwtSettings>(builder.Configuration.GetSection("JwtSettings"));
@@ -41,6 +67,7 @@ builder.Services.AddAuthentication(options =>
 {
     options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
     options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+    options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
 })
 .AddJwtBearer(options =>
 {
@@ -53,7 +80,8 @@ builder.Services.AddAuthentication(options =>
         ValidIssuer = jwtSettings?.Issuer,
         ValidAudience = jwtSettings?.Audience,
         IssuerSigningKey = new SymmetricSecurityKey(
-            Encoding.UTF8.GetBytes(jwtSettings?.SecretKey ?? string.Empty))
+            Encoding.UTF8.GetBytes(jwtSettings?.SecretKey ?? string.Empty)),
+        ClockSkew = TimeSpan.Zero
     };
 });
 
@@ -89,5 +117,13 @@ app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
+
+// Seed the database on startup (Development only)
+if (app.Environment.IsDevelopment())
+{
+    using var scope = app.Services.CreateScope();
+    var seeder = scope.ServiceProvider.GetRequiredService<IDbSeeder>();
+    await seeder.SeedAsync();
+}
 
 app.Run();

@@ -7,6 +7,11 @@ public class User
     public string Prenom { get; set; } = string.Empty;
     public DateTime DateNaissance { get; set; }
 
-    // Navigation property
+    // Authentication properties
+    public string Email { get; set; } = string.Empty;
+    public string PasswordHash { get; set; } = string.Empty;
+
+    // Navigation properties
     public ICollection<Account> Accounts { get; set; } = new List<Account>();
+    public ICollection<RefreshToken> RefreshTokens { get; set; } = new List<RefreshToken>();
 }
